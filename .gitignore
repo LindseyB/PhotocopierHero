@@ -1,4 +1,6 @@
+# Macs are garbage
 .DS_Store
+
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -20,3 +22,6 @@
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
+
+# Blender temp file
+*.blend1
