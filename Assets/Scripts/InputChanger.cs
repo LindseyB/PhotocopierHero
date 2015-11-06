@@ -4,23 +4,25 @@ using System.Collections;
 
 public class InputChanger : MonoBehaviour {
 	private Sprite[] keySprites;
+	private const float DURATION = 3f;
+	private float waitTime = 0;
 	
 	void Start() {
 		keySprites = Resources.LoadAll<Sprite>("Keys");
 	}
 
 	void Update() {
-		int index = Random.Range(0, keySprites.Length);
-		gameObject.GetComponent<Image>().sprite = keySprites[index];
+		waitTime -= Time.deltaTime;
 
-		int x = Random.Range (50, 933);
-		int y = Random.Range (50, 445);
+		if (waitTime <= 0) {
+			waitTime = DURATION;
+			int index = Random.Range(0, keySprites.Length);
+			gameObject.GetComponent<Image>().sprite = keySprites[index];
 
-		gameObject.GetComponent<RectTransform>().position = new Vector3(x,
-		                                                                y,
-		                                                                0);
-
-		Debug.Log ("x: " + x + " y: " + y);
+			gameObject.GetComponent<RectTransform>().position = new Vector3 (Random.Range (50, 933),
+		                                                                	 Random.Range (50, 445),
+		                                                                     0);
+		}
 
 	}
 }
