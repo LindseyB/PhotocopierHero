@@ -23,14 +23,14 @@ public class InputChanger : MonoBehaviour {
 
 			Regex keyRegex = new Regex(".*Keyboard_White_(.*).png");
 			Match match = keyRegex.Match(AssetDatabase.GetAssetPath(keySprites[index]));
-			Debug.Log(match.Groups[1].Value);
 			key = (KeyCode)System.Enum.Parse(typeof(KeyCode), match.Groups[1].Value);
 
 			gameObject.GetComponent<Image>().sprite = keySprites[index];
-
+			gameObject.GetComponent<Image>().CrossFadeAlpha(1,0,false);
 			gameObject.GetComponent<RectTransform>().position = new Vector3 (Random.Range (50, 933),
 		                                                                	 Random.Range (50, 445),
 		                                                                     0);
+			gameObject.GetComponent<Image>().CrossFadeAlpha(0, DURATION, false);
 		}
 
 	}
