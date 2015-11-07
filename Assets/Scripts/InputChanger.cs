@@ -9,10 +9,11 @@ public class InputChanger : MonoBehaviour {
 	[SerializeField] GameObject smoke;
 
 	private Sprite[] keySprites;
-	private const float DURATION = 3f;
+	private float duration = 3f;
 	private const float MISS_DURATION = 1f;
 	private float waitTime = 0;
 	private int missCount = 0;
+	private int hitCount = 0;
 
 	private KeyCode key;
 
@@ -26,6 +27,14 @@ public class InputChanger : MonoBehaviour {
 	void Update() {
 		waitTime -= Time.deltaTime;
 
+		if (Input.GetKeyDown(key)){ 
+			hitCount++;
+
+			if(hitCount % 10 == 0){
+				duration -= 0.5f;
+			}
+		}
+
 		if (waitTime <= 0 || Input.GetKeyDown(key)) {
 			if(waitTime <= 0 && !first){
 				missCount++;
@@ -37,7 +46,7 @@ public class InputChanger : MonoBehaviour {
 			}
 
 			first = false;
-			waitTime = DURATION;
+			waitTime = duration;
 			int index = Random.Range(0, keySprites.Length);
 
 			Regex keyRegex = new Regex(".*Keyboard_White_(.*).png");
@@ -49,7 +58,7 @@ public class InputChanger : MonoBehaviour {
 			gameObject.GetComponent<RectTransform>().position = new Vector3 (Random.Range (50, 933),
 		                                                                	 Random.Range (50, 445),
 		                                                                     0);
-			gameObject.GetComponent<Image>().CrossFadeAlpha(0, DURATION, false);
+			gameObject.GetComponent<Image>().CrossFadeAlpha(0, duration, false);
 		}
 	}
 
