@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 public class InputChanger : MonoBehaviour {
 	[SerializeField] GameObject missText;
 	[SerializeField] GameObject smoke;
+	[SerializeField] GameObject fire;
 
 	private Sprite[] keySprites;
 	private float duration = 3f;
@@ -42,6 +43,8 @@ public class InputChanger : MonoBehaviour {
 
 				if(missCount == 1){
 					smoke.SetActive(true);
+				} else if(missCount == 2){
+					fire.SetActive(true);
 				}
 			}
 

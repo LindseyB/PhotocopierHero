@@ -63,3 +63,11 @@ Cmd: compileSnippet
   api=0 type=0 insize=1482 outsize=509 kw=SOFTPARTICLES_OFF pd= ok=1
 Cmd: compileSnippet
   api=0 type=1 insize=1482 outsize=6 kw=SOFTPARTICLES_OFF pd= ok=1
+Cmd: compileSnippet
+  api=0 type=0 insize=1705 outsize=1344 kw=SOFTPARTICLES_ON pd= ok=1
+Cmd: compileSnippet
+  api=0 type=1 insize=1705 outsize=6 kw=SOFTPARTICLES_ON pd= ok=1
+Cmd: compileSnippet
+  api=0 type=0 insize=3985 outsize=2145 kw=POINT pd= ok=1
+Cmd: compileSnippet
+  api=0 type=1 insize=3985 outsize=6 kw=POINT pd= ok=1
