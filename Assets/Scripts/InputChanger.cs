@@ -8,6 +8,8 @@ public class InputChanger : MonoBehaviour {
 	[SerializeField] GameObject missText;
 	[SerializeField] GameObject smoke;
 	[SerializeField] GameObject fire;
+	[SerializeField] GameObject explodeyBits;
+	[SerializeField] GameObject copier;
 
 	private Sprite[] keySprites;
 	private float duration = 3f;
@@ -15,6 +17,9 @@ public class InputChanger : MonoBehaviour {
 	private float waitTime = 0;
 	private int missCount = 0;
 	private int hitCount = 0;
+
+	public float radius = 10.0F;
+	public float power = 10.0F;
 
 	private KeyCode key;
 
@@ -45,6 +50,8 @@ public class InputChanger : MonoBehaviour {
 					smoke.SetActive(true);
 				} else if(missCount == 2){
 					fire.SetActive(true);
+				} else if(missCount == 3){
+					Explode();
 				}
 			}
 
@@ -74,5 +81,23 @@ public class InputChanger : MonoBehaviour {
 		}
 
 		return null;
+	}
+
+	void Explode() {
+		copier.SetActive (false);
+		smoke.SetActive(false);
+		fire.SetActive(false);
+
+		float mult1, mult2, mult3;
+
+		explodeyBits.SetActive(true);
+		foreach (Rigidbody rb in GameObject.FindObjectsOfType<Rigidbody>()) {
+			// get signs randomly
+			mult1 = Random.value > 0.5f ? -1 : 1;
+			mult2 = Random.value > 0.5f ? -1 : 1;
+			mult3 = Random.value > 0.5f ? -1 : 1;
+
+			rb.velocity = new Vector3(mult1*1000,mult2*1000,mult3*1000);
+		}
 	}
 }
