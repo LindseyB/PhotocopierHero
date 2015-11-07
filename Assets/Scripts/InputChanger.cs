@@ -6,12 +6,16 @@ using System.Text.RegularExpressions;
 
 public class InputChanger : MonoBehaviour {
 	[SerializeField] GameObject missText;
+	[SerializeField] GameObject smoke;
 
 	private Sprite[] keySprites;
 	private const float DURATION = 3f;
 	private const float MISS_DURATION = 1f;
 	private float waitTime = 0;
+	private int missCount = 0;
+
 	private KeyCode key;
+
 
 	bool first = true;
 
@@ -24,7 +28,12 @@ public class InputChanger : MonoBehaviour {
 
 		if (waitTime <= 0 || Input.GetKeyDown(key)) {
 			if(waitTime <= 0 && !first){
+				missCount++;
 				StartCoroutine("displayMiss");
+
+				if(missCount == 1){
+					smoke.SetActive(true);
+				}
 			}
 
 			first = false;
