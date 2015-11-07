@@ -10,16 +10,16 @@ public class InputChanger : MonoBehaviour {
 	[SerializeField] GameObject fire;
 	[SerializeField] GameObject explodeyBits;
 	[SerializeField] GameObject copier;
+	[SerializeField] GameObject gameOverScreen;
 
 	private Sprite[] keySprites;
 	private float duration = 3f;
 	private const float MISS_DURATION = 1f;
 	private float waitTime = 0;
+
 	private int missCount = 0;
 	private int hitCount = 0;
-
-	public float radius = 10.0F;
-	public float power = 10.0F;
+	private bool gameOver = false;
 
 	private KeyCode key;
 
@@ -31,6 +31,12 @@ public class InputChanger : MonoBehaviour {
 	}
 
 	void Update() {
+		if (gameOver && Input.GetKeyDown(KeyCode.Return)) { 
+			ResetGame();
+		} else if(gameOver) {
+			return;
+		}
+
 		waitTime -= Time.deltaTime;
 
 		if (Input.GetKeyDown(key)){ 
@@ -52,6 +58,8 @@ public class InputChanger : MonoBehaviour {
 					fire.SetActive(true);
 				} else if(missCount == 3){
 					Explode();
+					DisplayGameOver(hitCount);
+					gameOver = true;
 				}
 			}
 
@@ -98,6 +106,31 @@ public class InputChanger : MonoBehaviour {
 			mult3 = Random.value > 0.5f ? -1 : 1;
 
 			rb.velocity = new Vector3(mult1*1000,mult2*1000,mult3*1000);
+		}
+	}
+
+	void ResetGame() {
+		duration = 3f;
+		waitTime = 0;
+		missCount = 0;
+		hitCount = 0;
+		gameOver = false;
+		Application.LoadLevel(0);
+	}
+
+	void DisplayGameOver(int score) {
+		gameOverScreen.SetActive(true);
+		GameObject.Find("Score").GetComponent<Text>().text = "Your Score: " + score;
+		StartCoroutine("BlinkText");
+	}
+
+	IEnumerator BlinkText() {
+		Text text = GameObject.Find("PlayAgain").GetComponent<Text>();
+		while (true) {
+			text.CrossFadeAlpha (0f, 0.5f, false);
+			yield return new WaitForSeconds (1.0f);
+			text.CrossFadeAlpha (1f, 0.5f, false);
+			yield return new WaitForSeconds (1.0f);
 		}
 	}
 }
