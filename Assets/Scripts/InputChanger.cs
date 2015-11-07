@@ -5,10 +5,15 @@ using System.Collections;
 using System.Text.RegularExpressions;
 
 public class InputChanger : MonoBehaviour {
+	[SerializeField] GameObject missText;
+
 	private Sprite[] keySprites;
 	private const float DURATION = 3f;
+	private const float MISS_DURATION = 1f;
 	private float waitTime = 0;
 	private KeyCode key;
+
+	bool first = true;
 
 	void Start() {
 		keySprites = Resources.LoadAll<Sprite>("Keys");
@@ -18,6 +23,11 @@ public class InputChanger : MonoBehaviour {
 		waitTime -= Time.deltaTime;
 
 		if (waitTime <= 0 || Input.GetKeyDown(key)) {
+			if(waitTime <= 0 && !first){
+				StartCoroutine("displayMiss");
+			}
+
+			first = false;
 			waitTime = DURATION;
 			int index = Random.Range(0, keySprites.Length);
 
@@ -32,6 +42,16 @@ public class InputChanger : MonoBehaviour {
 		                                                                     0);
 			gameObject.GetComponent<Image>().CrossFadeAlpha(0, DURATION, false);
 		}
+	}
 
+	IEnumerable displayMiss() {
+		missText.SetActive(true);
+
+		foreach (Text text in missText.GetComponentsInChildren<Text>()) {
+			text.CrossFadeAlpha(1,0,false);
+			text.CrossFadeAlpha(0, MISS_DURATION, false);
+		}
+
+		return null;
 	}
 }
