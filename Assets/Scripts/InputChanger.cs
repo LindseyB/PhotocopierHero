@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
 using System.Collections;
 using System.Text.RegularExpressions;
 
@@ -67,8 +66,9 @@ public class InputChanger : MonoBehaviour {
 			waitTime = duration;
 			int index = Random.Range(0, keySprites.Length);
 
-			Regex keyRegex = new Regex(".*Keyboard_White_(.*).png");
-			Match match = keyRegex.Match(AssetDatabase.GetAssetPath(keySprites[index]));
+			Regex keyRegex = new Regex(".*Keyboard_White_(.*)");
+			Match match = keyRegex.Match(keySprites[index].name);
+
 			key = (KeyCode)System.Enum.Parse(typeof(KeyCode), match.Groups[1].Value);
 
 			gameObject.GetComponent<Image>().sprite = keySprites[index];
