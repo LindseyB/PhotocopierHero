@@ -115,7 +115,7 @@ public class InputChanger : MonoBehaviour {
 		missCount = 0;
 		hitCount = 0;
 		gameOver = false;
-		Application.LoadLevel(0);
+		Application.LoadLevel(1);
 	}
 
 	void DisplayGameOver(int score) {
